@@ -80,13 +80,13 @@ box("back wall window header", [6.15, 2.2, 0.24], [-1.5, 6.9, -5], materials.wal
 box("back wall window sill", [6.15, 1.05, 0.24], [-1.5, 0.525, -5], materials.wall);
 
 // A soft blue daytime landscape sits beyond the openings in the rear wall.
-const sky = new THREE.MeshBasicMaterial({ color: 0x283b68 });
+const sky = new THREE.MeshBasicMaterial({ color: 0x2a2a35 });
 const distantHill = new THREE.MeshBasicMaterial({ color: 0x5b5365 });
 const nearHill = new THREE.MeshBasicMaterial({ color: 0x364b4b });
 box("outside sky", [14, 12, 0.12], [0, 5, -5.8], sky, false);
 box("distant landscape", [14, 2.3, 0.18], [0, 1.65, -5.65], distantHill, false);
 box("meadow", [14, 1.2, 0.18], [0, 0.15, -5.6], nearHill, false);
-sphere("sun", 0.55, [-4.25, 2.8, -5.5], new THREE.MeshBasicMaterial({ color: 0xff8a55 }));
+sphere("sun", 0.55, [-4.25, -1, -5.5], new THREE.MeshBasicMaterial({ color: 0xff8a55 }));
 
 for (const x of [-3.25, 0.2]) {
     box("window glass", [2.2, 4.55, 0.08], [x, 3.425, -4.78], materials.glass, false);
@@ -115,18 +115,13 @@ for (const x of [2.1, 3.55]) {
     box("console handle", [0.22, 0.045, 0.07], [x, 0.49, -3.825], materials.metal);
 }
 box("television frame", [3.5, 2.15, 0.16], [2.95, 2.42, -4.43], materials.metal);
-const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x172a33 });
 box("television screen", [3.28, 1.92, 0.025], [2.95, 2.43, -4.335], screenMaterial, false);
 box("tv stand neck", [0.16, 0.35, 0.16], [2.95, 1.32, -4.34], materials.metal);
 box("tv stand foot", [0.9, 0.08, 0.38], [2.95, 1.13, -4.32], materials.metal);
-const tvLight =
-new THREE.PointLight(
-    0x0000ff,
-    24,
-    12
-);
-tvLight.position.set(2.95, 2.43, -4.05);
-scene.add(tvLight);
+//const tvLight = new THREE.PointLight(0x0000ff, 24,12);
+//tvLight.position.set(2.95, 2.43, -4.05);
+//scene.add(tvLight);
 // A compact upholstered armchair, turned toward the TV.
 box("chair seat", [3.15, 0.52, 2.45], [-1.05, 1.22, 1.0], materials.fabric);
 box("chair seat cushion", [2.76, 0.25, 2.05], [-1.05, 1.59, 0.95], materials.cushion);
@@ -183,6 +178,10 @@ lampGlow.color.set(0xffcc88);
 lampGlow.position.set(1.5, 2.1, 1.15);
 scene.add(lampGlow);
 
+const lightning = new THREE.PointLight(0xeaf4ff, 0, 40);
+lightning.position.set(-1.5, 4.8, -5.6);
+scene.add(lightning);
+
 window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -190,6 +189,7 @@ window.addEventListener("resize", () => {
 });
 
 function animate() {
+    lightning.intensity = Math.random() > 0.94 ? 85 : 0;
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
