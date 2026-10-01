@@ -115,11 +115,18 @@ for (const x of [2.1, 3.55]) {
     box("console handle", [0.22, 0.045, 0.07], [x, 0.49, -3.825], materials.metal);
 }
 box("television frame", [3.5, 2.15, 0.16], [2.95, 2.42, -4.43], materials.metal);
-const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x172a33 });
+const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 box("television screen", [3.28, 1.92, 0.025], [2.95, 2.43, -4.335], screenMaterial, false);
 box("tv stand neck", [0.16, 0.35, 0.16], [2.95, 1.32, -4.34], materials.metal);
 box("tv stand foot", [0.9, 0.08, 0.38], [2.95, 1.13, -4.32], materials.metal);
-
+const tvLight =
+new THREE.PointLight(
+    0x0000ff,
+    24,
+    12
+);
+tvLight.position.set(2.95, 2.43, -4.05);
+scene.add(tvLight);
 // A compact upholstered armchair, turned toward the TV.
 box("chair seat", [3.15, 0.52, 2.45], [-1.05, 1.22, 1.0], materials.fabric);
 box("chair seat cushion", [2.76, 0.25, 2.05], [-1.05, 1.59, 0.95], materials.cushion);
@@ -161,8 +168,8 @@ box("lamp stem", [0.09, 0.8, 0.09], [1.5, 1.68, 1.15], materials.metal);
 const ambientLight = new THREE.HemisphereLight(0x9db4e8, 0x493448, 0.55);
 scene.add(ambientLight);
 
-const sunlight = new THREE.DirectionalLight(0xffb15c, 0.85);
-sunlight.position.set(-5, 7, 7);
+const sunlight = new THREE.DirectionalLight(0xffb15c, 0.1);
+sunlight.position.set(-5, 4, 7);
 sunlight.castShadow = true;
 sunlight.shadow.mapSize.set(2048, 2048);
 sunlight.shadow.camera.left = -10;
@@ -171,7 +178,7 @@ sunlight.shadow.camera.top = 12;
 sunlight.shadow.camera.bottom = -4;
 scene.add(sunlight);
 
-const lampGlow = new THREE.PointLight(0xffc56f, 28, 5);
+const lampGlow = new THREE.PointLight(0xffc56f, 0, 0);
 lampGlow.color.set(0xffcc88);
 lampGlow.position.set(1.5, 2.1, 1.15);
 scene.add(lampGlow);
