@@ -80,13 +80,13 @@ box("back wall window header", [6.15, 2.2, 0.24], [-1.5, 6.9, -5], materials.wal
 box("back wall window sill", [6.15, 1.05, 0.24], [-1.5, 0.525, -5], materials.wall);
 
 // A soft blue daytime landscape sits beyond the openings in the rear wall.
-const sky = new THREE.MeshBasicMaterial({ color: 0x83c8d7 });
-const distantHill = new THREE.MeshBasicMaterial({ color: 0x8ea98a });
-const nearHill = new THREE.MeshBasicMaterial({ color: 0x597d5b });
+const sky = new THREE.MeshBasicMaterial({ color: 0x283b68 });
+const distantHill = new THREE.MeshBasicMaterial({ color: 0x5b5365 });
+const nearHill = new THREE.MeshBasicMaterial({ color: 0x364b4b });
 box("outside sky", [14, 12, 0.12], [0, 5, -5.8], sky, false);
 box("distant landscape", [14, 2.3, 0.18], [0, 1.65, -5.65], distantHill, false);
 box("meadow", [14, 1.2, 0.18], [0, 0.15, -5.6], nearHill, false);
-sphere("sun", 0.55, [-4.25, 5.35, -5.5], new THREE.MeshBasicMaterial({ color: 0xffd47d }));
+sphere("sun", 0.55, [-4.25, 2.8, -5.5], new THREE.MeshBasicMaterial({ color: 0xff8a55 }));
 
 for (const x of [-3.25, 0.2]) {
     box("window glass", [2.2, 4.55, 0.08], [x, 3.425, -4.78], materials.glass, false);
@@ -158,11 +158,11 @@ lampShade.position.set(1.5, 2.18, 1.15);
 scene.add(lampShade);
 box("lamp stem", [0.09, 0.8, 0.09], [1.5, 1.68, 1.15], materials.metal);
 
-const ambientLight = new THREE.HemisphereLight(0xe2f1ff, 0x75614c, 1.45);
+const ambientLight = new THREE.HemisphereLight(0x9db4e8, 0x493448, 0.55);
 scene.add(ambientLight);
 
-const sunlight = new THREE.DirectionalLight(0xffe2b6, 3.1);
-sunlight.position.set(-5, 10, 7);
+const sunlight = new THREE.DirectionalLight(0xffb15c, 0.85);
+sunlight.position.set(-5, 7, 7);
 sunlight.castShadow = true;
 sunlight.shadow.mapSize.set(2048, 2048);
 sunlight.shadow.camera.left = -10;
@@ -172,6 +172,7 @@ sunlight.shadow.camera.bottom = -4;
 scene.add(sunlight);
 
 const lampGlow = new THREE.PointLight(0xffc56f, 28, 5);
+lampGlow.color.set(0xffcc88);
 lampGlow.position.set(1.5, 2.1, 1.15);
 scene.add(lampGlow);
 
