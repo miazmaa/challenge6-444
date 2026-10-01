@@ -4,7 +4,7 @@ import { OrbitControls }
 from "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xc6d7d6);
+scene.background = new THREE.Color(0x75879a);
 
 const camera = new THREE.PerspectiveCamera(
     42,
@@ -79,10 +79,9 @@ box("back wall between windows", [0.4, 8, 0.24], [-1.35, 4, -5], materials.wall)
 box("back wall window header", [6.15, 2.2, 0.24], [-1.5, 6.9, -5], materials.wall);
 box("back wall window sill", [6.15, 1.05, 0.24], [-1.5, 0.525, -5], materials.wall);
 
-// A soft blue daytime landscape sits beyond the openings in the rear wall.
-const sky = new THREE.MeshBasicMaterial({ color: 0x2a2a35 });
-const distantHill = new THREE.MeshBasicMaterial({ color: 0x5b5365 });
-const nearHill = new THREE.MeshBasicMaterial({ color: 0x364b4b });
+const sky = new THREE.MeshBasicMaterial({ color: 0x1d2433 });
+const distantHill = new THREE.MeshBasicMaterial({ color: 0x4a4551 });
+const nearHill = new THREE.MeshBasicMaterial({ color: 0x2d3a3a });
 box("outside sky", [14, 12, 0.12], [0, 5, -5.8], sky, false);
 box("distant landscape", [14, 2.3, 0.18], [0, 1.65, -5.65], distantHill, false);
 box("meadow", [14, 1.2, 0.18], [0, 0.15, -5.6], nearHill, false);
@@ -115,13 +114,15 @@ for (const x of [2.1, 3.55]) {
     box("console handle", [0.22, 0.045, 0.07], [x, 0.49, -3.825], materials.metal);
 }
 box("television frame", [3.5, 2.15, 0.16], [2.95, 2.42, -4.43], materials.metal);
-const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x172a33 });
+const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 box("television screen", [3.28, 1.92, 0.025], [2.95, 2.43, -4.335], screenMaterial, false);
 box("tv stand neck", [0.16, 0.35, 0.16], [2.95, 1.32, -4.34], materials.metal);
 box("tv stand foot", [0.9, 0.08, 0.38], [2.95, 1.13, -4.32], materials.metal);
-//const tvLight = new THREE.PointLight(0x0000ff, 24,12);
-//tvLight.position.set(2.95, 2.43, -4.05);
-//scene.add(tvLight);
+const tvLight = new THREE.PointLight(0x0000ff, 6, 12);
+
+tvLight.position.set(2.95, 2.43, -4.0);
+scene.add(tvLight);
+
 // A compact upholstered armchair, turned toward the TV.
 box("chair seat", [3.15, 0.52, 2.45], [-1.05, 1.22, 1.0], materials.fabric);
 box("chair seat cushion", [2.76, 0.25, 2.05], [-1.05, 1.59, 0.95], materials.cushion);
@@ -160,10 +161,10 @@ lampShade.position.set(1.5, 2.18, 1.15);
 scene.add(lampShade);
 box("lamp stem", [0.09, 0.8, 0.09], [1.5, 1.68, 1.15], materials.metal);
 
-const ambientLight = new THREE.HemisphereLight(0x9db4e8, 0x493448, 0.55);
+const ambientLight = new THREE.HemisphereLight(0x9db4e8, 0x493448, 0.22);
 scene.add(ambientLight);
 
-const sunlight = new THREE.DirectionalLight(0xffb15c, 0.1);
+const sunlight = new THREE.DirectionalLight(0xffb15c, 0.04);
 sunlight.position.set(-5, 4, 7);
 sunlight.castShadow = true;
 sunlight.shadow.mapSize.set(2048, 2048);
@@ -173,8 +174,8 @@ sunlight.shadow.camera.top = 12;
 sunlight.shadow.camera.bottom = -4;
 scene.add(sunlight);
 
-const lampGlow = new THREE.PointLight(0xffc56f, 0, 0);
-lampGlow.color.set(0xffcc88);
+const lampGlow = new THREE.PointLight(0x00fd, 5, 5);
+lampGlow.color.set(0x00fd);
 lampGlow.position.set(1.5, 2.1, 1.15);
 scene.add(lampGlow);
 
@@ -189,6 +190,7 @@ window.addEventListener("resize", () => {
 });
 
 function animate() {
+    tvLight.intensity = 2.5 + Math.sin(performance.now() * 0.02) * 1.8 + Math.random() * 2.2;
     lightning.intensity = Math.random() > 0.94 ? 85 : 0;
     requestAnimationFrame(animate);
     controls.update();
